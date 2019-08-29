@@ -1,6 +1,3 @@
-// Questions - is head referring to the address of the node?
-// how do we get the prev node's next in a single linked list?
-
 
 // ===== 1. Create a linked list class =====
 // include insertFirst, insertLast, remove, find
@@ -31,6 +28,19 @@ class LinkedList {
         tempNode = tempNode.next;
       }
       tempNode.next = new _Node(item, null);
+    }
+  }
+
+  insertCycleItem(item) {
+    if (this.head === null) {
+      this.insertFirst(item);
+    } 
+    else {
+      let tempNode = this.head;
+      while (tempNode.next !== null) {
+        tempNode = tempNode.next;
+      }
+      tempNode.next = new _Node(item, this.head);
     }
   }
 
@@ -271,7 +281,7 @@ console.log('Find last: ', findLast(SLL));
 // ===== 5. Reverse a list =====
 // Write an algorithm to reverse a linked list. The time complexity of your algorithm should be linear (O(n)). For this exercise, notice we are not asking you just to print the linked list in reverse or use another linked list to store the value in reverse order. Your program should reverse the direction of a given singly linked list. In other words, all pointers should point backward. BONUS: Solve this problem using both recursive and iterative algorithms.
 
-function reversePointers(ll) {
+function reversePointers(ll) { //<---- Reverse not working yet, all but how to end is implemented
   let currNode = ll.head;
   let previousNode = ll.head;
   let nextNode = currNode.next;
@@ -293,7 +303,7 @@ function reversePointers(ll) {
   return (ll);
 }
 
-//console.log(reversePointers(SLL));
+//console.log('Reverse pointers: ', reversePointers(SLL));
 
 // ===== 6. 3rd from the end =====
 
@@ -336,14 +346,42 @@ function middleOfList(ll) {
 console.log('Middle of the list: ', middleOfList(SLL));
 
 // ===== 8. Cycle in a list =====
-let cycleList = new LinkedList;
-function createCycleList(ll) {
+// Research: "Floyd’s Cycle-Finding Algorithm: This is the fastest method and has been described below:
 
+// Traverse linked list using two pointers. 
+// Move one pointer(slow_p) by one and another pointer(fast_p) by two. 
+// If these pointers meet at the same node then there is a loop. If pointers do not meet then linked list doesn’t have a loop" Credit: https://www.geeksforgeeks.org/detect-loop-in-a-linked-list/
+
+let CycleLL = new LinkedList;
+function cycleCreator(ll) {
+  ll.insertFirst('Apollo');
+  ll.insertLast('Boomer');
+  ll.insertLast('Helo');
+  ll.insertCycleItem('Husker');
+
+  return ll;
 }
+// <-- creating a cycle list not working yet
+console.log('CYCLE LIST', CycleLL);
 
-//createCycleList(cycleList);
+function cycleInAList(ll) {
+  // create two pointers
+  let slowPointer = ll.head;
+  let fastPointer = ll.head;
 
-function cycleInAList() {}
+  while (slowPointer !== null) {
+    if (fastPointer === null) {
+      return 'No loop detected';
+    } 
+
+    if (slowPointer === fastPointer) {
+      return 'Loop detected!';
+    }
+
+    slowPointer = slowPointer.next;
+    fastPointer = fastPointer.next.next;
+  }
+}
 
 //console.log('Cycle in a list: ', cycleInAList(cycleList));
 
