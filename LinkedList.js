@@ -199,7 +199,7 @@ function size(ll) {
   return size;
 }
 
-console.log(size(SLL));
+console.log('Size: ', size(SLL));
 
 // ISEMPTY - finds if the list is empty or not without using size
 function isEmpty(ll) {
@@ -212,8 +212,8 @@ function isEmpty(ll) {
   }
 }
 
-console.log(isEmpty(SLL));
-console.log(isEmpty(empty));
+console.log('Is empty (false): ', isEmpty(SLL));
+console.log('Is empty (true): ', isEmpty(empty));
 
 // FINDPREVIOUS - finds the node before the item you are looking for
 function findPrevious(ll, item){
@@ -237,7 +237,7 @@ function findPrevious(ll, item){
   return `${previousNode.value} comes before ${item}`;
 }
 
-console.log(findPrevious(SLL, 'Boomer'));
+console.log('Find previous: ', findPrevious(SLL, 'Boomer'));
 
 
 // FINDLAST - finds the last node in the linked list
@@ -254,9 +254,9 @@ function findLast(ll) {
   return `${currNode.value} is the last item!`;
 }
 
-console.log(findLast(SLL));
+console.log('Find last: ', findLast(SLL));
 
-// ===== Mystery Program =====
+// ===== 4. Mystery Program =====
 // Analyze the following function (without running it in
 // an IDE) to determine what problem it is trying to solve.
 // What is the time complexity of this algorithm?
@@ -268,5 +268,93 @@ console.log(findLast(SLL));
 
 //Time Complexity:  O(n)?  It's only going through the list once?
 
-// ===== Reverse a list =====
+// ===== 5. Reverse a list =====
 // Write an algorithm to reverse a linked list. The time complexity of your algorithm should be linear (O(n)). For this exercise, notice we are not asking you just to print the linked list in reverse or use another linked list to store the value in reverse order. Your program should reverse the direction of a given singly linked list. In other words, all pointers should point backward. BONUS: Solve this problem using both recursive and iterative algorithms.
+
+function reversePointers(ll) {
+  let currNode = ll.head;
+  let previousNode = ll.head;
+  let nextNode = currNode.next;
+
+  while (currNode !== null) {
+    console.log('=====');
+    if (currNode === ll.head) {
+      currNode.next = null;
+      console.log('Setting pointer of', currNode.value, 'to null');
+    } 
+    else {
+      currNode.next = previousNode;
+      console.log('Setting pointer of', currNode.value, 'to previous', previousNode.value);
+    }
+    previousNode = currNode;
+    currNode = nextNode;
+    nextNode = (!currNode.next)? null : currNode.next;
+  }
+  return (ll);
+}
+
+//console.log(reversePointers(SLL));
+
+// ===== 6. 3rd from the end =====
+
+function thirdFromTheEnd(ll) {
+  let currNode = ll.head;
+  let threeAway = currNode.next.next.next;
+
+  while (currNode !== null) {
+    if (threeAway === null) {
+      return currNode.value;
+    }
+    else {
+      currNode = currNode.next;
+      threeAway = currNode.next.next.next;
+    }
+  }
+}
+
+console.log('Third from the end: ', thirdFromTheEnd(SLL));
+
+// ===== 7. Middle of a list =====
+// how to find the middle without length or size
+// "Two pointers travel over the list, one with double speed. When the fast one reaches the end, the other one is half-way." https://cs.stackexchange.com/questions/56219/how-to-find-middle-element-of-linked-list-in-one-pass
+
+function middleOfList(ll) {
+// Two pointers
+  let slowPointer = ll.head;
+  let fastPointer = ll.head;
+
+  while (fastPointer !== null) {
+    if (fastPointer.next === null) {
+      return slowPointer.value;
+    }
+    slowPointer = slowPointer.next;
+    fastPointer = fastPointer.next.next;
+  }
+  return slowPointer.value;
+}
+
+console.log('Middle of the list: ', middleOfList(SLL));
+
+// ===== 8. Cycle in a list =====
+let cycleList = new LinkedList;
+function createCycleList(ll) {
+
+}
+
+//createCycleList(cycleList);
+
+function cycleInAList() {}
+
+//console.log('Cycle in a list: ', cycleInAList(cycleList));
+
+// ===== 9. Doubly linked list =====
+
+function doublyLinkedList() {}
+
+//console.log('Doubly linked list: ', doublyLinkedList());
+
+// ===== 10. Reverse a DLL =====
+
+function reverseDLL() {}
+
+//console.log('Reverse doubly linked list: ', reverseDLL());
